@@ -1,7 +1,7 @@
 ---------------------------------config--------------------------------------
 useCommand = true -- Allow you to use /equipe to wear the explosive vest
 
-deadman_switch = false -- set true to explode when you die
+deadman_switch = true -- set true to explode when you die
 
 useBlip = true -- Set false if you want hide the jacket location
 
@@ -32,11 +32,21 @@ Citizen.CreateThread(function()
   while not HasWeaponAssetLoaded(GetHashKey("WEAPON_RPG")) do
       Wait(0)
   end
-  while true do
-    location()
-    Citizen.Wait(10)
+  local modelHash = `prop_bomb_01_s`
+  if not HasModelLoaded(modelHash) then
+
+      RequestModel(modelHash)
+
+      while not HasModelLoaded(modelHash) do
+          Citizen.Wait(1)
+      end
   end
-end)
+
+    while true do
+      location()
+      Citizen.Wait(1)
+    end
+  end)
 
 if useCommand == true then
   RegisterCommand("equipe",function(source, args, rawCommand)
@@ -106,10 +116,18 @@ function explosion()
     local vehicle = GetVehiclePedIsIn(ped,false)
     ExplodeVehicleInCutscene(vehicle,true)
   else
-    ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z+0.1, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_PASSENGER_ROCKET"), ped, true, false, 0)
-    ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z+0.1, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_RPG"), ped, true, false, 0)
-    ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z+0.1, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_AIRSTRIKE_ROCKET"), ped, true, false, 0)
-    ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z+0.1, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_STICKYBOMB"), ped, true, false, 0)
+    o = 0
+    while o < 1 do
+      ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z+0.1, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_STICKYBOMB"), ped, true, false, 0)
+      if not IsPedFalling(ped) then
+        ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_AIRSTRIKE_ROCKET"), ped, true, false, 0)
+      end
+      if not IsPedInParachuteFreeFall(ped) then
+        ShootSingleBulletBetweenCoords(coords.x, coords.y, coords.z, coords.x, coords.y, coords.z, 500, true,GetHashKey("WEAPON_AIRSTRIKE_ROCKET"), ped, true, false, 0)
+      end
+      o = o + 0.1
+      Citizen.Wait(1)
+    end
   end
   SetPedComponentVariation(ped, 9, 0, 0, 0)
 end
