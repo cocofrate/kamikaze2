@@ -24,14 +24,6 @@ Citizen.CreateThread(function()
   while not HasWeaponAssetLoaded(GetHashKey("WEAPON_STICKYBOMB")) do
       Wait(0)
   end
-  RequestWeaponAsset(GetHashKey("WEAPON_GRENADE")) 
-  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_GRENADE")) do
-      Wait(0)
-  end
-  RequestWeaponAsset(GetHashKey("WEAPON_RPG")) 
-  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_RPG")) do
-      Wait(0)
-  end
     while true do
       location()
       Citizen.Wait(1)
