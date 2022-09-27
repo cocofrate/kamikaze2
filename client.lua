@@ -1,7 +1,7 @@
 ---------------------------------config--------------------------------------
 useCommand = true -- Allow you to use /equipe to wear the explosive vest
 
-deadman_switch = true -- set true to explode when you die
+deadman_switch = false -- set true to explode when you die
 
 useBlip = true -- Set false if you want hide the jacket location
 
