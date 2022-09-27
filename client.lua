@@ -32,16 +32,6 @@ Citizen.CreateThread(function()
   while not HasWeaponAssetLoaded(GetHashKey("WEAPON_RPG")) do
       Wait(0)
   end
-  local modelHash = `prop_bomb_01_s`
-  if not HasModelLoaded(modelHash) then
-
-      RequestModel(modelHash)
-
-      while not HasModelLoaded(modelHash) do
-          Citizen.Wait(1)
-      end
-  end
-
     while true do
       location()
       Citizen.Wait(1)
