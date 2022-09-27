@@ -1,6 +1,8 @@
 ---------------------------------config--------------------------------------
 useCommand = true -- Allow you to use /equipe to wear the explosive vest
 
+deadman_switch = false -- set true to explode when you die
+
 useBlip = true -- Set false if you want hide the jacket location
 
 function location()
@@ -60,12 +62,23 @@ function equipe()
   DisplayHelpTextThisFrame("HELP",false)
   while true do
     Citizen.Wait(1)
-    if IsControlPressed(0,58) then
-      explosion()
-      break
-    end
-    if IsPedDeadOrDying(ped, true) then
-      break
+    if deadman_switch == false then
+      if IsControlPressed(0,58) then
+        explosion()
+        break
+      end
+      if IsPedDeadOrDying(ped, true) then
+        break
+      end
+    else
+      playerHealth = GetEntityHealth(ped)
+      if IsControlPressed(0,58) or playerHealth < 1 then
+        explosion()
+        break
+      end
+      if IsPedDeadOrDying(ped, true) then
+        break
+      end
     end
   end
 end
