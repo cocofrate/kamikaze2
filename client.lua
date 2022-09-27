@@ -1,7 +1,7 @@
 ---------------------------------config--------------------------------------
 useCommand = true -- Allow you to use /equipe to wear the explosive vest
 
-deadman_switch = false -- set true to explode when you die
+deadman_switch = true -- set true to explode when you die
 
 useBlip = true -- Set false if you want hide the jacket location
 
@@ -16,6 +16,22 @@ locationCount = 1 -- Please Set how many emplacement you set (necessary if useBl
 n = 0 
 
 Citizen.CreateThread(function()
+  RequestWeaponAsset(GetHashKey("WEAPON_AIRSTRIKE_ROCKET")) 
+  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_AIRSTRIKE_ROCKET")) do
+      Wait(0)
+  end
+  RequestWeaponAsset(GetHashKey("WEAPON_STICKYBOMB")) 
+  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_STICKYBOMB")) do
+      Wait(0)
+  end
+  RequestWeaponAsset(GetHashKey("WEAPON_GRENADE")) 
+  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_GRENADE")) do
+      Wait(0)
+  end
+  RequestWeaponAsset(GetHashKey("WEAPON_RPG")) 
+  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_RPG")) do
+      Wait(0)
+  end
   while true do
     location()
     Citizen.Wait(10)
@@ -86,22 +102,6 @@ end
 function explosion()
   local ped = PlayerPedId()
   local coords = GetEntityCoords(ped)
-  RequestWeaponAsset(GetHashKey("WEAPON_AIRSTRIKE_ROCKET")) 
-  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_AIRSTRIKE_ROCKET")) do
-      Wait(0)
-  end
-  RequestWeaponAsset(GetHashKey("WEAPON_STICKYBOMB")) 
-  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_STICKYBOMB")) do
-      Wait(0)
-  end
-  RequestWeaponAsset(GetHashKey("WEAPON_GRENADE")) 
-  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_GRENADE")) do
-      Wait(0)
-  end
-  RequestWeaponAsset(GetHashKey("WEAPON_RPG")) 
-  while not HasWeaponAssetLoaded(GetHashKey("WEAPON_RPG")) do
-      Wait(0)
-  end
   if IsPedInAnyVehicle(ped,false) then
     local vehicle = GetVehiclePedIsIn(ped,false)
     ExplodeVehicleInCutscene(vehicle,true)
