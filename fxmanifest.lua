@@ -2,13 +2,9 @@ games {'gta5'}
 
 fx_version 'bodacious'
 
-description 'Define zones of different shapes and test whether a point is inside or outside of the zone'
-version '2.5.0'
+description 'Use explosive belt'
+version '1.0.2'
 
 client_scripts {
   'client.lua',
-}
-
-server_scripts {
-  'server.lua',
 }
